@@ -1200,11 +1200,29 @@ function adjDirect(id, rawVal) {
       <div class="card-lbl">Variables</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
         <div>
-          <p style="font-size:12px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">Cuerpo 1 — Cobre (caliente)</p>
+          <p style="font-size:12px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;">Cuerpo 1 — <span id="u14p5subName">Cobre</span> (caliente)</p>
+          <div class="sim-field">
+            <label>Sustancia</label>
+            <select id="u14p5subSel" onchange="u14p5SetSubstance(this.value,this)" style="width:100%;padding:9px 10px;font-family:var(--font);font-size:13px;border:1px solid var(--border);background:#fff;color:var(--text);border-radius:2px;">
+              <option value="1.000">Agua — 1,000 cal/g·°C</option>
+              <option value="0.500">Hielo — 0,500 cal/g·°C</option>
+              <option value="0.480">Vapor — 0,480 cal/g·°C</option>
+              <option value="0.113">Hierro — 0,113 cal/g·°C</option>
+              <option value="0.092" selected>Cobre — 0,092 cal/g·°C</option>
+              <option value="0.217">Aluminio — 0,217 cal/g·°C</option>
+              <option value="0.056">Plata — 0,056 cal/g·°C</option>
+              <option value="0.199">Vidrio — 0,199 cal/g·°C</option>
+              <option value="0.033">Mercurio — 0,033 cal/g·°C</option>
+              <option value="0.031">Plomo — 0,031 cal/g·°C</option>
+              <option value="otro">Otro (ingresar manualmente)</option>
+            </select>
+          </div>
           <div class="sim-field"><label>Masa m_Cu <span id="u14p5mCuv">30 g</span></label>
             <input type="hidden" id="u14p5mCu" value="30"><div class="stepper" data-id="u14p5mCu" data-min="5" data-max="200" data-step="1" data-dec="0" data-cb=""><button class="step-btn" onclick="adj('u14p5mCu',-1)">−</button><input type="text" class="step-val" id="u14p5mCu_sv" value="30" inputmode="decimal" autocomplete="off" onchange="adjDirect('u14p5mCu',this.value)" onkeydown="if(event.key==='Enter')this.blur()"><span class="step-unit">g</span><button class="step-btn" onclick="adj('u14p5mCu',+1)">+</button></div></div>
           <div class="sim-field"><label>c_Cu (cal/g·°C) <span id="u14p5cCuv">0,092</span></label>
-            <input type="hidden" id="u14p5cCu" value="0.092"><div class="stepper" data-id="u14p5cCu" data-min="0.010" data-max="1.000" data-step="0.001" data-dec="3" data-cb=""><button class="step-btn" onclick="adj('u14p5cCu',-1)">−</button><input type="text" class="step-val" id="u14p5cCu_sv" value="0.092" inputmode="decimal" autocomplete="off" onchange="adjDirect('u14p5cCu',this.value)" onkeydown="if(event.key==='Enter')this.blur()"><span class="step-unit">cal/g·°C</span><button class="step-btn" onclick="adj('u14p5cCu',+1)">+</button></div></div>
+            <input type="hidden" id="u14p5cCu" value="0.092"><div class="stepper" data-id="u14p5cCu" data-min="0.010" data-max="1.000" data-step="0.001" data-dec="3" data-cb=""><button class="step-btn" onclick="adj('u14p5cCu',-1);u14p5MarkManual()">−</button><input type="text" class="step-val" id="u14p5cCu_sv" value="0.092" inputmode="decimal" autocomplete="off" onchange="adjDirect('u14p5cCu',this.value);u14p5MarkManual()" onkeydown="if(event.key==='Enter')this.blur()"><span class="step-unit">cal/g·°C</span><button class="step-btn" onclick="adj('u14p5cCu',+1);u14p5MarkManual()">+</button></div>
+            <div style="font-size:10px;color:var(--text-soft);margin-top:3px;">Se completa automáticamente al elegir una sustancia de la lista. Con "Otro" queda libre para escribir cualquier valor.</div>
+          </div>
           <div class="sim-field" style="margin-bottom:0"><label>t_Cu inicial (°C) <span id="u14p5tCuv">100 °C</span></label>
             <input type="hidden" id="u14p5tCu" value="100"><div class="stepper" data-id="u14p5tCu" data-min="30" data-max="200" data-step="1" data-dec="0" data-cb=""><button class="step-btn" onclick="adj('u14p5tCu',-1)">−</button><input type="text" class="step-val" id="u14p5tCu_sv" value="100" inputmode="decimal" autocomplete="off" onchange="adjDirect('u14p5tCu',this.value)" onkeydown="if(event.key==='Enter')this.blur()"><span class="step-unit">°C</span><button class="step-btn" onclick="adj('u14p5tCu',+1)">+</button></div></div>
         </div>
@@ -1509,7 +1527,7 @@ function adjDirect(id, rawVal) {
         <div>
   <div class="card accent" style="margin-top:0;">
     <div class="card-lbl">🎬 Escena física — Calor específico desconocido</div>
-    <canvas id="anim_p6_canvas" class="anim-cv" width="640" height="420" style="width:100%;display:block;background:#0c1016;border-radius:4px;margin-bottom:10px;"></canvas>
+    <canvas id="anim_p6_canvas" class="anim-cv" width="640" height="300" style="width:100%;display:block;background:#0c1016;border-radius:4px;margin-bottom:10px;"></canvas>
     <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
       <button id="anim_p6_btn" onclick="animP6Toggle()" style="background:#C44B2A;color:#fff;border:none;padding:9px 20px;font-family:var(--font);font-size:9px;font-weight:800;letter-spacing:3px;text-transform:uppercase;cursor:pointer;">▶ INICIAR</button>
       <button onclick="animP6Reset()" style="background:transparent;color:var(--text);border:1px solid var(--border);padding:9px 14px;font-family:var(--font);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;">↺ REINICIAR</button>
@@ -1518,6 +1536,19 @@ function adjDirect(id, rawVal) {
         <div id="anim_p6_lbl" style="font-size:9px;color:var(--text-soft);letter-spacing:1.5px;text-transform:uppercase;"></div>
       </div>
     </div>
+  </div>
+  <div class="card" style="margin-top:12px;">
+    <div class="card-lbl">📈 Gráfico — Calor absorbido (Q) vs. progreso del proceso</div>
+    <canvas id="anim_p6_graph_canvas" class="anim-cv" width="640" height="210" data-ratio="0.328" style="width:100%;display:block;background:#0c1016;border-radius:4px;margin-bottom:10px;"></canvas>
+    <p style="font-size:12px;color:var(--text-mid);line-height:1.6;margin-top:4px;">
+      <strong>Qué muestra este gráfico:</strong> la curva es el calor Q (en calorías) que el calorímetro
+      (cobre + agua) va absorbiendo a medida que avanza el proceso. El eje horizontal es el
+      <em>progreso</em> de la animación (0% = la sustancia x recién cae al calorímetro, 100% = se
+      alcanzó el equilibrio térmico) — no es tiempo real, porque el enunciado no da una tasa de
+      transferencia de calor. La curva sube hasta estabilizarse en
+      <strong>Q_abs = <span id="u14p6graphQ">418,4</span> cal</strong>, que es el mismo valor que se
+      usa para calcular c_x, ya que en el equilibrio Q_abs = −Q_ced.
+    </p>
   </div>
 </div>
       </div>
@@ -1713,8 +1744,27 @@ function adjDirect(id, rawVal) {
             <input type="hidden" id="u14p8H" value="100"><div class="stepper" data-id="u14p8H" data-min="10" data-max="500" data-step="10" data-dec="0" data-cb=""><button class="step-btn" onclick="adj('u14p8H',-1)">−</button><input type="text" class="step-val" id="u14p8H_sv" value="100" inputmode="decimal" autocomplete="off" onchange="adjDirect('u14p8H',this.value)" onkeydown="if(event.key==='Enter')this.blur()"><span class="step-unit">cal/s</span><button class="step-btn" onclick="adj('u14p8H',+1)">+</button></div></div>
         </div>
         <div>
-          <div class="sim-field"><label>c_H hielo (cal/g·°C) <span id="u14p8cHv">0,5</span></label>
-            <input type="hidden" id="u14p8cH" value="0.50"><div class="stepper" data-id="u14p8cH" data-min="0.10" data-max="1.00" data-step="0.01" data-dec="2" data-cb=""><button class="step-btn" onclick="adj('u14p8cH',-1)">−</button><input type="text" class="step-val" id="u14p8cH_sv" value="0.50" inputmode="decimal" autocomplete="off" onchange="adjDirect('u14p8cH',this.value)" onkeydown="if(event.key==='Enter')this.blur()"><span class="step-unit">cal/g·°C</span><button class="step-btn" onclick="adj('u14p8cH',+1)">+</button></div></div>
+          <div class="sim-field">
+            <label>Sustancia sólida (tramo A) <span id="u14p8subName" style="text-transform:none;">Hielo</span></label>
+            <select id="u14p8subSel" onchange="u14p8SetSubstance(this.value,this)" style="width:100%;padding:9px 10px;font-family:var(--font);font-size:13px;border:1px solid var(--border);background:#fff;color:var(--text);border-radius:2px;">
+              <option value="1.000">Agua — 1,000 cal/g·°C</option>
+              <option value="0.500" selected>Hielo — 0,500 cal/g·°C</option>
+              <option value="0.480">Vapor — 0,480 cal/g·°C</option>
+              <option value="0.113">Hierro — 0,113 cal/g·°C</option>
+              <option value="0.093">Cobre — 0,093 cal/g·°C</option>
+              <option value="0.217">Aluminio — 0,217 cal/g·°C</option>
+              <option value="0.056">Plata — 0,056 cal/g·°C</option>
+              <option value="0.199">Vidrio — 0,199 cal/g·°C</option>
+              <option value="0.033">Mercurio — 0,033 cal/g·°C</option>
+              <option value="0.031">Plomo — 0,031 cal/g·°C</option>
+              <option value="otro">Otro (ingresar manualmente)</option>
+            </select>
+            <div style="font-size:10px;color:var(--text-soft);margin-top:3px;line-height:1.4;">
+              Cambia el calor específico del tramo A (calentamiento del sólido). El calor latente de fusión (L_f) y el calor específico del líquido siguen siendo los del agua/hielo — ajustalos manualmente abajo si simulás otra sustancia, ya que la tabla de calores específicos no incluye esos datos por sustancia.
+            </div>
+          </div>
+          <div class="sim-field"><label>c_H sólido (cal/g·°C) <span id="u14p8cHv">0,5</span></label>
+            <input type="hidden" id="u14p8cH" value="0.50"><div class="stepper" data-id="u14p8cH" data-min="0.010" data-max="1.00" data-step="0.001" data-dec="3" data-cb=""><button class="step-btn" onclick="adj('u14p8cH',-1);u14p8MarkManual()">−</button><input type="text" class="step-val" id="u14p8cH_sv" value="0.50" inputmode="decimal" autocomplete="off" onchange="adjDirect('u14p8cH',this.value);u14p8MarkManual()" onkeydown="if(event.key==='Enter')this.blur()"><span class="step-unit">cal/g·°C</span><button class="step-btn" onclick="adj('u14p8cH',+1);u14p8MarkManual()">+</button></div></div>
           <div class="sim-field"><label>L_f fusión (cal/g) <span id="u14p8Lfv">79,7 cal/g</span></label>
             <input type="hidden" id="u14p8Lf" value="79.7"><div class="stepper" data-id="u14p8Lf" data-min="50.0" data-max="120.0" data-step="0.1" data-dec="1" data-cb=""><button class="step-btn" onclick="adj('u14p8Lf',-1)">−</button><input type="text" class="step-val" id="u14p8Lf_sv" value="79.7" inputmode="decimal" autocomplete="off" onchange="adjDirect('u14p8Lf',this.value)" onkeydown="if(event.key==='Enter')this.blur()"><span class="step-unit">cal/g</span><button class="step-btn" onclick="adj('u14p8Lf',+1)">+</button></div></div>
           <div class="sim-field" style="margin-bottom:0"><label>c_agua (cal/g·°C) <span id="u14p8cAv">1,0</span></label>
@@ -1734,7 +1784,7 @@ function adjDirect(id, rawVal) {
     </div>
     <div class="sim-results" style="grid-template-columns:repeat(4,1fr)">
       <div class="sim-result-card" style="border-color:rgba(26,95,160,.25)">
-        <div class="sim-result-lbl">Tramo A — hielo</div>
+        <div class="sim-result-lbl">Tramo A — <span id="u14p8rAname">hielo</span></div>
         <div class="sim-result-val" style="color:var(--blue);font-size:17px;" id="u14p8rA">20 seg</div>
         <div class="sim-result-sub" id="u14p8rAsub">−20 → 0 °C</div>
       </div>
@@ -3055,6 +3105,28 @@ function u14p5sim(){
   }catch(e){ console.warn('u14p5sim error:',e); }
 }
 
+/* ── Selector de sustancia — Cuerpo 1 (monedas), problema u14p5 ── */
+function u14p5SetSubstance(val, selEl){
+  var opt = selEl.options[selEl.selectedIndex];
+  var name = opt.textContent.split(' — ')[0];
+  var nameEl = document.getElementById('u14p5subName');
+  if(val === 'otro'){
+    if(nameEl) nameEl.textContent = 'Sustancia';
+    var inp = document.getElementById('u14p5cCu_sv');
+    if(inp){ inp.focus(); inp.select(); }
+    return;
+  }
+  if(nameEl) nameEl.textContent = name;
+  adjDirect('u14p5cCu', val);
+}
+/* Si el usuario toca el valor a mano, el combo pasa a reflejar "Otro" */
+function u14p5MarkManual(){
+  var sel = document.getElementById('u14p5subSel');
+  if(sel) sel.value = 'otro';
+  var nameEl = document.getElementById('u14p5subName');
+  if(nameEl) nameEl.textContent = 'Sustancia';
+}
+
 function u14p6sim(){
   try{
     function g(id,def){var el=document.getElementById(id);return el?+el.value:def;}
@@ -3076,6 +3148,7 @@ function u14p6sim(){
     H('u14p6fl5','<b>c<sub>x</sub> = <span style="font-size:1.2em;color:var(--coral)">'+cx.toFixed(4)+' cal/g·°C</span></b>');
     S('u14p6lf','c_x = '+Abs.toFixed(2)+' / '+Ced.toFixed(2)+' = '+cx.toFixed(4)+' cal/g·°C');
     S('u14p6nota','c_x = '+cx.toFixed(4)+' cal/g·°C con m_x='+mx+'g a '+tx+'°C, calorímetro a t₀='+t0+'°C, t_eq='+te+'°C.');
+    S('u14p6graphQ', Math.abs(Abs).toFixed(1));
   }catch(e){ console.warn('u14p6sim:',e); }
 }
 
@@ -3089,12 +3162,15 @@ function u14p8sim(){
     var QA=m*cH*Math.abs(t0), QB=m*Lf, QC=m*cA*100;
     var tA=QA/Hr, tB=QB/Hr, tC=QC/Hr, tot=tA+tB+tC;
     S('u14p8mv',m+' g'); S('u14p8t0v',t0+' °C');
-    S('u14p8Hv',Hr+' cal/seg'); S('u14p8cHv',cH.toFixed(2));
+    S('u14p8Hv',Hr+' cal/seg'); S('u14p8cHv',cH.toFixed(3));
     S('u14p8Lfv',Lf.toFixed(1)); S('u14p8cAv',cA.toFixed(2));
     S('u14p8tA',tA.toFixed(1)+' seg'); S('u14p8tB',tB.toFixed(1)+' seg');
     S('u14p8tC',tC.toFixed(1)+' seg'); S('u14p8tot',tot.toFixed(1)+' seg');
     S('u14p8QA',QA.toFixed(0)+' cal'); S('u14p8QB',QB.toFixed(0)+' cal');
     S('u14p8QC',QC.toFixed(0)+' cal');
+    var subName=document.getElementById('u14p8subName');
+    var subText=subName?subName.textContent:'hielo';
+    S('u14p8rAname',subText.toLowerCase());
     H('u14p8fl1','Tramo A: Q_A = '+m+'×'+cH+'×'+Math.abs(t0)+' = <b>'+QA.toFixed(0)+' cal</b>  →  τ_A = '+tA.toFixed(1)+' seg');
     H('u14p8fl2','Tramo B: Q_B = '+m+'×'+Lf+' = <b>'+QB.toFixed(0)+' cal</b>  →  τ_B = '+tB.toFixed(1)+' seg');
     H('u14p8fl3','Tramo C: Q_C = '+m+'×'+cA+'×100 = <b>'+QC.toFixed(0)+' cal</b>  →  τ_C = '+tC.toFixed(1)+' seg');
@@ -3104,6 +3180,32 @@ function u14p8sim(){
     S('u14p8nota','Fusión dura '+tB.toFixed(1)+' seg ('+((tB/tot)*100).toFixed(0)+'% del total). '+
       'Con H='+Hr+' cal/s y m='+m+'g: τ_A='+tA.toFixed(1)+'s, τ_B='+tB.toFixed(1)+'s, τ_C='+tC.toFixed(1)+'s.');
   }catch(e){ console.warn('u14p8sim:',e); }
+}
+
+/* ── Selector de sustancia — Tramo A (sólido), problema u14p8 ── */
+function u14p8SetSubstance(val, selEl){
+  var opt = selEl.options[selEl.selectedIndex];
+  var name = opt.textContent.split(' — ')[0];
+  var nameEl = document.getElementById('u14p8subName');
+  if(val === 'otro'){
+    if(nameEl) nameEl.textContent = 'Sustancia';
+    var inp = document.getElementById('u14p8cH_sv');
+    if(inp){ inp.focus(); inp.select(); }
+    return;
+  }
+  if(nameEl) nameEl.textContent = name;
+  adjDirect('u14p8cH', val);
+  try{ u14p8sim(); }catch(e){}
+  try{ if(document.getElementById('u14p8_resultado_card').style.display!=='none') calcular_u14p8(); }catch(e){}
+  try{ updateP8ChartLabel(name); }catch(e){}
+}
+/* Si el usuario toca el valor a mano, el combo pasa a reflejar "Otro" */
+function u14p8MarkManual(){
+  var sel = document.getElementById('u14p8subSel');
+  if(sel) sel.value = 'otro';
+  var nameEl = document.getElementById('u14p8subName');
+  if(nameEl) nameEl.textContent = 'Sustancia';
+  try{ updateP8ChartLabel('Sustancia'); }catch(e){}
 }
 
 document.addEventListener('DOMContentLoaded',function(){
@@ -3551,18 +3653,23 @@ function drawP5scene(t){
   }
 }
 
-/* ─── drawP6scene — Calor específico con ejes Q vs T ─── */
+/* ─── drawP6scene — wrapper: dibuja escena + gráfico (cada uno en su canvas) ─── */
 function drawP6scene(t){
+  drawP6body(t);
+  drawP6graph(t);
+}
+
+/* ─── drawP6body — Escena física (vasijas, calorímetro, sustancia x) ─── */
+function drawP6body(t){
   var cv=document.getElementById('anim_p6_canvas');if(!cv)return;
   var ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
   var p=getP6();
-  var now=Date.now()/1000;
   ctx.fillStyle='#0c1016';ctx.fillRect(0,0,W,H);
 
   var ph=t<.25?0:t<.55?1:2;
   SETLBL('anim_p6',['Sust. x en agua hirv. · T_x = '+p.tx+'°C','Cayendo al calorímetro Cu+H₂O','c_x = '+p.cx.toFixed(4)+' cal/g·°C'][ph]);
 
-  var SH=Math.round(H*.58);
+  var SH=H;
 
   // Vasija izquierda
   var LX=22,LY=34,LW=118,LH=SH-50;
@@ -3602,9 +3709,27 @@ function drawP6scene(t){
   ctx.fillStyle='rgba(255,255,255,.75)';ctx.font='bold 11px "Courier New"';ctx.textAlign='center';
   ctx.fillText('x',objX,objY+4);ctx.textAlign='left';
 
-  // ── GRÁFICO con ejes — Q absorbido vs tiempo (progreso de la transferencia) ──
-  var PAD_L=60,PAD_B=28,PAD_T=14,PAD_R=22;
-  var gx=PAD_L,gy=SH+PAD_T,gw=W-PAD_L-PAD_R,gh=H-SH-PAD_T-PAD_B;
+  // Resultado final (destacado sobre el calorímetro)
+  if(ph===2&&t>.85){
+    var ba=CLAMP((t-.85)/.15,0,1);ctx.save();ctx.globalAlpha=ba;
+    ctx.fillStyle='rgba(196,75,42,.1)';ctx.strokeStyle='#C44B2A';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.roundRect(RX-6,RY-26,RW+12,RH+46,4);ctx.fill();ctx.stroke();
+    ctx.fillStyle='#f78166';ctx.font='bold 12px "Courier New"';ctx.textAlign='center';
+    ctx.fillText('c_x = '+p.cx.toFixed(4)+' cal/g·°C',RX+RW/2,RY+RH+22);ctx.textAlign='left';ctx.restore();
+  }
+}
+
+/* ─── drawP6graph — Gráfico Q absorbido vs. progreso, en canvas propio ─── */
+function drawP6graph(t){
+  var cv=document.getElementById('anim_p6_graph_canvas');if(!cv)return;
+  var ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
+  var p=getP6();
+  ctx.fillStyle='#0c1016';ctx.fillRect(0,0,W,H);
+
+  var ph=t<.25?0:t<.55?1:2;
+
+  var PAD_L=60,PAD_B=28,PAD_T=16,PAD_R=22;
+  var gx=PAD_L,gy=PAD_T,gw=W-PAD_L-PAD_R,gh=H-PAD_T-PAD_B;
   ctx.fillStyle='rgba(255,255,255,.02)';ctx.fillRect(gx,gy,gw,gh);
 
   var Qmax=Math.abs(p.Abs);
@@ -3635,14 +3760,9 @@ function drawP6scene(t){
     ctx.fillText(Qcurr.toFixed(1)+' cal',px+7,py-3);
   }
 
-  // Resultado final
-  if(ph===2&&t>.85){
-    var ba=CLAMP((t-.85)/.15,0,1);ctx.save();ctx.globalAlpha=ba;
-    ctx.fillStyle='rgba(196,75,42,.1)';ctx.strokeStyle='#C44B2A';ctx.lineWidth=1.5;
-    ctx.beginPath();ctx.roundRect(RX-6,RY-26,RW+12,RH+46,4);ctx.fill();ctx.stroke();
-    ctx.fillStyle='#f78166';ctx.font='bold 12px "Courier New"';ctx.textAlign='center';
-    ctx.fillText('c_x = '+p.cx.toFixed(4)+' cal/g·°C',RX+RW/2,RY+RH+22);ctx.textAlign='left';ctx.restore();
-  }
+  // Q_abs final, siempre visible como referencia arriba a la derecha
+  ctx.fillStyle='rgba(255,255,255,.55)';ctx.font='bold 10px "Courier New"';ctx.textAlign='right';
+  ctx.fillText('Q_abs = '+Qmax.toFixed(1)+' cal',gx+gw,gy-4);ctx.textAlign='left';
 }
 
 /* ─── drawP2 — ΔU=Q-W con ejes U vs estado ─── */
@@ -3963,6 +4083,12 @@ function animP6Reset(){RESET(AP6,drawP6scene);}
 var AP8=MK('anim_p8',.002);
 var _p8chart=null;
 var _p8chartData=[];
+function updateP8ChartLabel(name){
+  if(_p8chart && _p8chart.data && _p8chart.data.datasets[0]){
+    _p8chart.data.datasets[0].label = 'A — '+name;
+    _p8chart.update('none');
+  }
+}
 
 function getP8(){
   function g(id,def){var el=document.getElementById(id);return el?+el.value:def;}
@@ -4029,7 +4155,7 @@ function initP8Chart(){
     plugins:[refLinesPlugin],
     data:{
       datasets:[
-        {label:'A — Hielo',  data:[],borderColor:'#79c0ff',backgroundColor:'rgba(121,192,255,.12)',borderWidth:2.5,pointRadius:0,showLine:true,tension:0},
+        {label:'A — '+((document.getElementById('u14p8subName')||{}).textContent||'Hielo'),  data:[],borderColor:'#79c0ff',backgroundColor:'rgba(121,192,255,.12)',borderWidth:2.5,pointRadius:0,showLine:true,tension:0},
         {label:'B — Fusión', data:[],borderColor:'#f78166',backgroundColor:'rgba(247,129,102,.10)',borderWidth:2.5,pointRadius:0,showLine:true,tension:0},
         {label:'C — Agua',   data:[],borderColor:'#56d364',backgroundColor:'rgba(86,211,100,.10)', borderWidth:2.5,pointRadius:0,showLine:true,tension:0},
         {label:'Instante',   data:[],borderColor:'#fff',backgroundColor:'#fff',pointRadius:7,pointHoverRadius:9,showLine:false}
@@ -4107,7 +4233,9 @@ function drawP8(t){
   if(!_p8chart) return;
 
   var ph=t<=p.nA?0:t<=p.nA+p.nB?1:2;
-  var phNames=['A — Calentando hielo ('+p.t0+'→0°C)','B — Fusión · meseta a 0°C','C — Calentando agua (0→100°C)'];
+  var subNameEl8=document.getElementById('u14p8subName');
+  var subLow8=(subNameEl8?subNameEl8.textContent:'hielo').toLowerCase();
+  var phNames=['A — Calentando '+subLow8+' ('+p.t0+'→0°C)','B — Fusión · meseta a 0°C','C — Calentando agua (0→100°C)'];
   SETLBL('anim_p8',phNames[ph]+'  ·  τ='+(t*p.tot).toFixed(1)+'s  ·  T='+Tval8(p,t).toFixed(1)+'°C');
 
   // Construir puntos hasta t actual
@@ -4329,7 +4457,8 @@ var _PAGE_CANVAS_MAP={
 };
 var _DRAW_MAP={
   'anim_p5_canvas':   function(){drawP5scene(AP5.t);},
-  'anim_p6_canvas':   function(){drawP6scene(AP6.t);},
+  'anim_p6_canvas':   function(){drawP6body(AP6.t);},
+  'anim_p6_graph_canvas': function(){drawP6graph(AP6.t);},
   'anim_p8_chartjs':  function(){drawP8(AP8.t);},
   'anim_p2_canvas':   function(){drawP2(AP2.t);},
   'anim_p6u15_canvas':function(){drawP6u15(AP6U15.t);},
@@ -4351,7 +4480,7 @@ function _triggerCanvas(pageId){
 
 document.addEventListener('DOMContentLoaded',function(){
   // Guardar ratios
-  ['anim_p5_canvas','anim_p6_canvas','anim_p2_canvas','anim_p6u15_canvas','anim_p7u15_canvas','anim_p8_vessel'].forEach(function(cid){
+  ['anim_p5_canvas','anim_p6_canvas','anim_p6_graph_canvas','anim_p2_canvas','anim_p6u15_canvas','anim_p7u15_canvas','anim_p8_vessel'].forEach(function(cid){
     var cv=document.getElementById(cid);
     if(cv)cv.dataset.ratio=(cv.height/cv.width).toFixed(4);
   });
@@ -4365,7 +4494,7 @@ document.addEventListener('DOMContentLoaded',function(){
       if(panel&&!panel.classList.contains('active'))return;
       if(page&&!page.classList.contains('active'))return;
       var aMap={
-        'anim_p5_canvas':AP5,'anim_p6_canvas':AP6,'anim_p8_chartjs':AP8,
+        'anim_p5_canvas':AP5,'anim_p6_canvas':AP6,'anim_p6_graph_canvas':AP6,'anim_p8_chartjs':AP8,
         'anim_p2_canvas':AP2,'anim_p6u15_canvas':AP6U15,'anim_p7u15_canvas':AP7U15
       };
       var a=aMap[cid];if(a&&a.run)return;
